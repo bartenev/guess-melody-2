@@ -1,6 +1,6 @@
 # Учебный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
-* Студент: [Alisa Chernysheva](https://up.htmlacademy.ru/react/2/user/14931).
+* Студент: `Неизвестно`.
 * Наставник: `Неизвестно`.
 
 ---
