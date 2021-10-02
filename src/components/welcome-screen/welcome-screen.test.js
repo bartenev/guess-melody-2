@@ -6,7 +6,9 @@ it(`RenderWelcomeScreen`, () => {
   const tree = renderer
     .create(<WelcomeScreen
       time={4}
-      errorCount={6}/>)
+      errorCount={6}
+      onWelcomeButtonClick={() => {}}
+    />)
     .toJSON();
 
   expect(tree).toMatchSnapshot();
