@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const welcomeButtonHandler = () => {};
 const App = (props) => {
-  const {gameTime, errorCount} = props;
+  const {gameTime, errorCount, questions} = props;
 
   return <WelcomeScreen
     time={gameTime}
@@ -16,6 +16,7 @@ const App = (props) => {
 App.propTypes = {
   gameTime: PropTypes.number.isRequired,
   errorCount: PropTypes.number.isRequired,
+  questions: PropTypes.array.anyOf(PropTypes.object).isRequired,
 };
 
 export default App;
