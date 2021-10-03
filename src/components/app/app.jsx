@@ -16,7 +16,7 @@ const App = (props) => {
 App.propTypes = {
   gameTime: PropTypes.number.isRequired,
   errorCount: PropTypes.number.isRequired,
-  questions: PropTypes.array.anyOf(PropTypes.object).isRequired,
+  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default App;
