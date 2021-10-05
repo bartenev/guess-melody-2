@@ -115,9 +115,8 @@ exports[`ArtistQuestionScreen is rendered correctly 1`] = `
           htmlFor="answer-0"
         >
           <img
-            alt="Пелагея"
+            alt="John Snow"
             className="artist__picture"
-            src="http://placehold.it/134x134"
           />
           Пелагея
         </label>
@@ -138,9 +137,8 @@ exports[`ArtistQuestionScreen is rendered correctly 1`] = `
           htmlFor="answer-1"
         >
           <img
-            alt="Пелагея"
+            alt="Jack Daniels"
             className="artist__picture"
-            src="http://placehold.it/134x134"
           />
           Пелагея
         </label>
@@ -161,9 +159,8 @@ exports[`ArtistQuestionScreen is rendered correctly 1`] = `
           htmlFor="answer-2"
         >
           <img
-            alt="Пелагея"
+            alt="Jim Beam"
             className="artist__picture"
-            src="http://placehold.it/134x134"
           />
           Пелагея
         </label>

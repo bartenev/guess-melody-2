@@ -16,7 +16,7 @@ const ArtistQuestionScreen = (props) => {
 
         <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780">
           <circle className="timer__line" cx="390" cy="390" r="370"
-            style="filter: url(#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"/>
+            style={{filter: `url(#blur)`, transform: `rotate(-90deg) scaleY(-1)`, transformOrigin: `center`}}/>
         </svg>
 
         <div className="timer__value" xmlns="http://www.w3.org/1999/xhtml">
@@ -52,11 +52,11 @@ const ArtistQuestionScreen = (props) => {
                 id={`answer-${i}`}
                 onChange={(evt) => {
                   evt.preventDefault();
-                  onAnswer(question, answer);
+                  onAnswer();
                 }}
               />
               <label className="artist__name" htmlFor={`answer-${i}`}>
-                <img className="artist__picture" src="http://placehold.it/134x134" alt="Пелагея"/>
+                <img className="artist__picture" src={answer.src} alt={answer.artist}/>
                     Пелагея
               </label>
             </div>
