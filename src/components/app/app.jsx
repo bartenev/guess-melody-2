@@ -7,9 +7,9 @@ import WelcomeScreen from "../welcome-screen/welcome-screen";
 
 class App extends PureComponent {
   static getScreen(question, props, onUserAnswer) {
-    if (question === -1) {
-      const {gameTime, errorCount} = props;
+    const {gameTime, errorCount, questions} = props;
 
+    if (question === -1 || question >= questions.length) {
       return <WelcomeScreen
         time={gameTime}
         errorCount={errorCount}
@@ -17,7 +17,6 @@ class App extends PureComponent {
       />;
     }
 
-    const {questions} = props;
     const currentQuestion = questions[question];
 
     switch (currentQuestion.type) {
@@ -48,13 +47,17 @@ class App extends PureComponent {
   }
 
   render() {
-    // const {gameTime, errorCount, questions} = this.props;
+    const {questions} = this.props;
     const {question} = this.state;
 
     return App.getScreen(question, this.props, () => {
-      this.setState((prevState) => ({
-        question: prevState.question + 1,
-      }));
+      this.setState((prevState) => {
+        const nextIndex = prevState.question + 1;
+        const isEnd = nextIndex >= questions.length;
+        return {
+          question: !isEnd ? nextIndex : -1,
+        };
+      });
     });
   }
 }
