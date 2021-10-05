@@ -11,6 +11,7 @@ module.exports = {
     static: path.resolve(__dirname, 'public'),
     open: false,
     port: 1337,
+    historyApiFallback: true
   },
   module: {
     rules: [
