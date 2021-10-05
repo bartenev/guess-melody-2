@@ -50,7 +50,10 @@ const ArtistQuestionScreen = (props) => {
                 type="radio" name="answer"
                 value={`artist-${i}`}
                 id={`answer-${i}`}
-                onClick={onAnswer}
+                onChange={(evt) => {
+                  evt.preventDefault();
+                  onAnswer(question, answer);
+                }}
               />
               <label className="artist__name" htmlFor={`answer-${i}`}>
                 <img className="artist__picture" src="http://placehold.it/134x134" alt="Пелагея"/>

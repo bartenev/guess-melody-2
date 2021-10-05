@@ -106,7 +106,7 @@ exports[`ArtistQuestionScreen is rendered correctly 1`] = `
           className="artist__input visually-hidden"
           id="answer-0"
           name="answer"
-          onClick={[Function]}
+          onChange={[Function]}
           type="radio"
           value="artist-0"
         />
@@ -129,7 +129,7 @@ exports[`ArtistQuestionScreen is rendered correctly 1`] = `
           className="artist__input visually-hidden"
           id="answer-1"
           name="answer"
-          onClick={[Function]}
+          onChange={[Function]}
           type="radio"
           value="artist-1"
         />
@@ -152,7 +152,7 @@ exports[`ArtistQuestionScreen is rendered correctly 1`] = `
           className="artist__input visually-hidden"
           id="answer-2"
           name="answer"
-          onClick={[Function]}
+          onChange={[Function]}
           type="radio"
           value="artist-2"
         />
