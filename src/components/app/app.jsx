@@ -2,6 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {GameType} from "../../const";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen";
+import GameScreen from "../game-screen/game-screen";
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen";
 import WelcomeScreen from "../welcome-screen/welcome-screen";
 
@@ -10,28 +11,36 @@ class App extends PureComponent {
     const {gameTime, errorCount, questions} = props;
 
     if (question === -1 || question >= questions.length) {
-      return <WelcomeScreen
-        time={gameTime}
-        errorCount={errorCount}
-        onStartButtonClick={onUserAnswer}
-      />;
+      return (
+        <WelcomeScreen
+          time={gameTime}
+          errorCount={errorCount}
+          onStartButtonClick={onUserAnswer}
+        />
+      );
     }
 
     const currentQuestion = questions[question];
 
     switch (currentQuestion.type) {
       case GameType.GENRE: return (
-        <GenreQuestionScreen
-          question={currentQuestion}
-          onAnswer={onUserAnswer}
-        />
+        <GameScreen
+          type={GameType.GENRE}
+        >
+          <GenreQuestionScreen
+            question={currentQuestion}
+            onAnswer={onUserAnswer}
+          />
+        </GameScreen>
       );
 
       case GameType.ARTIST: return (
-        <ArtistQuestionScreen
-          question={currentQuestion}
-          onAnswer={onUserAnswer}
-        />
+        <GameScreen type={GameType.ARTIST}>
+          <ArtistQuestionScreen
+            question={currentQuestion}
+            onAnswer={onUserAnswer}
+          />
+        </GameScreen>
       );
     }
 
