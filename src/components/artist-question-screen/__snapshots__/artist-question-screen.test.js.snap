@@ -50,7 +50,7 @@ exports[`ArtistQuestionScreen is rendered correctly 1`] = `
           alt="John Snow"
           className="artist__picture"
         />
-        Пелагея
+        John Snow
       </label>
     </div>
     <div
@@ -72,7 +72,7 @@ exports[`ArtistQuestionScreen is rendered correctly 1`] = `
           alt="Jack Daniels"
           className="artist__picture"
         />
-        Пелагея
+        Jack Daniels
       </label>
     </div>
     <div
@@ -94,7 +94,7 @@ exports[`ArtistQuestionScreen is rendered correctly 1`] = `
           alt="Jim Beam"
           className="artist__picture"
         />
-        Пелагея
+        Jim Beam
       </label>
     </div>
   </form>
