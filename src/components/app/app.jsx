@@ -10,7 +10,7 @@ import WelcomeScreen from "../welcome-screen/welcome-screen";
 
 class App extends PureComponent {
   static getScreen(props) {
-    const {gameTime, errorCount, questions, question, onUserAnswer} = props;
+    const {gameTime, errorCount, questions, question, onUserAnswer, mistakes} = props;
 
     if (question === -1 || question >= questions.length) {
       return (
@@ -28,6 +28,7 @@ class App extends PureComponent {
       case GameType.GENRE: return (
         <GameScreen
           type={GameType.GENRE}
+          mistakes={mistakes}
         >
           <GenreQuestionScreen
             question={currentQuestion}
@@ -37,7 +38,10 @@ class App extends PureComponent {
       );
 
       case GameType.ARTIST: return (
-        <GameScreen type={GameType.ARTIST}>
+        <GameScreen
+          type={GameType.ARTIST}
+          mistakes={mistakes}
+        >
           <ArtistQuestionScreen
             question={currentQuestion}
             onAnswer={onUserAnswer}
@@ -72,10 +76,12 @@ App.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   onUserAnswer: PropTypes.func.isRequired,
   question: PropTypes.number.isRequired,
+  mistakes: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   step: state.step,
+  mistakes: state.mistakes,
 });
 
 const mapDispatchToProps = (dispatch) => ({
