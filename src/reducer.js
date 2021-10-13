@@ -8,7 +8,18 @@ const initialState = {
 const ActionType = {
   INCREMENT_MISTAKES: `INCREMENT_MISTAKES`,
   INCREMENT_STEP: `INCREMENT_STEP`,
+  RESET_GAME: `RESET_GAME`,
 };
+
+const ActionCreator = {
+  incrementStep: () => ({
+    type: ActionType.INCREMENT_STEP,
+    payload: 1,
+  }),
+  resetGame: () => ({
+    type: ActionType.RESET_GAME,
+  }),
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -21,6 +32,9 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         mistakes: state.mistakes + action.payload,
       });
+
+    case ActionType.RESET_GAME:
+      return extend({}, initialState);
   }
 
   return state;
