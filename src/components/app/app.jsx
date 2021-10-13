@@ -88,8 +88,8 @@ const mapDispatchToProps = (dispatch) => ({
   resetGame() {
     dispatch(ActionCreator.resetGame());
   },
-  onUserAnswer() {
-    dispatch(ActionCreator.incrementStep());
+  onUserAnswer(question, answer) {
+    dispatch(ActionCreator.incrementStep(question, answer));
   },
 });
 
