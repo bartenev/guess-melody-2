@@ -5,7 +5,7 @@ const initialState = {
   mistakes: 0,
   step: -1,
   questions,
-}
+};
 
 const ActionType = {
   INCREMENT_MISTAKES: `INCREMENT_MISTAKES`,
@@ -15,11 +15,11 @@ const ActionType = {
 
 const isArtistAnswerCorrect = (question, userAnswer) => {
   return userAnswer.artist === question.song.artist;
-}
+};
 
 const isGenreAnswerCorrect = (question, userAnswer) => {
   return userAnswer.every((it, i) => {
-    return it === (question.answer[i].genre === question.genre);
+    return it === (question.answers[i].genre === question.genre);
   });
 };
 
@@ -47,36 +47,40 @@ const ActionCreator = {
     };
   },
 
-  resetGame: () => ({
-    type: ActionType.RESET_GAME,
-  }),
-}
+  // resetGame: () => ({
+  //   type: ActionType.RESET_GAME,
+  // }),
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.INCREMENT_STEP:
       let nextStep = state.step + action.payload;
 
+      if (nextStep >= state.questions.length) {
+        return extend({}, initialState);
+      }
+
       return extend(state, {
         step: nextStep,
       });
 
     case ActionType.INCREMENT_MISTAKES:
-      const mistakes = state.mistakes + action.payload;
+      if (state.step > -1) {
+        const mistakes = state.mistakes + action.payload;
 
-      if (mistakes >= MAX_MISTAKES_COUNT) {
-        return extend({}, initialState);
+        if (mistakes >= MAX_MISTAKES_COUNT) {
+          return extend({}, initialState);
+        }
+        return extend(state, {
+          mistakes: state.mistakes + action.payload,
+        });
       }
-
-      return extend(state, {
-        mistakes: state.mistakes + action.payload,
-      });
-
-    case ActionType.RESET_GAME:
-      return extend({}, initialState);
+    // case ActionType.RESET_GAME:
+    //   return extend({}, initialState);
   }
 
   return state;
-}
+};
 
 export {reducer, ActionType, ActionCreator};

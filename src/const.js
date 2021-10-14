@@ -5,6 +5,6 @@ export const GameType = {
 
 export const extend = (a, b) => {
   return Object.assign({}, a, b);
-}
+};
 
 export const MAX_MISTAKES_COUNT = 3;
