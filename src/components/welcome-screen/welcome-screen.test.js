@@ -7,7 +7,7 @@ it(`RenderWelcomeScreen`, () => {
     .create(<WelcomeScreen
       time={4}
       errorCount={6}
-      onStartButtonClick={() => {}}
+      onWelcomeScreenClick={() => {}}
     />)
     .toJSON();
 

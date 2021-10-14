@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Render App 1`] = `
+exports[`App correctly renders first screen 1`] = `
 <section
   className="welcome"
 >
@@ -16,7 +16,7 @@ exports[`Render App 1`] = `
   </div>
   <button
     className="welcome__button"
-    onClick={[Function]}
+    onClick={[MockFunction]}
   >
     <span
       className="visually-hidden"
@@ -44,7 +44,7 @@ exports[`Render App 1`] = `
     </li>
     <li>
       Можно допустить 
-      6
+      3
        ошибки.
     </li>
   </ul>

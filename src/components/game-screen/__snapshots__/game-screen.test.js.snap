@@ -67,12 +67,6 @@ exports[`GameScreen is rendered correctly with type GameType.ARTIST 1`] = `
       <div
         className="wrong"
       />
-      <div
-        className="wrong"
-      />
-      <div
-        className="wrong"
-      />
     </div>
   </header>
   <div
@@ -145,12 +139,6 @@ exports[`GameScreen is rendered correctly with type GameType.GENRE 1`] = `
     <div
       className="game__mistakes"
     >
-      <div
-        className="wrong"
-      />
-      <div
-        className="wrong"
-      />
       <div
         className="wrong"
       />

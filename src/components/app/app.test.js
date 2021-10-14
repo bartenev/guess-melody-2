@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app";
+import {App} from "./app";
 
 const questions = [
   {
@@ -48,15 +48,16 @@ const questions = [
   },
 ];
 
-it(`Render App`, () => {
+it(`App correctly renders first screen`, () => {
   const tree = renderer
     .create(<App
       gameTime={5}
-      errorCount={6}
       questions={questions}
+      onUserAnswer={jest.fn()}
+      onWelcomeScreenClick={jest.fn()}
+      step={-1}
     />)
   .toJSON();
 
   expect(tree).toMatchSnapshot();
 });
-
