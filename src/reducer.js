@@ -1,15 +1,17 @@
-import {extend, GameType, MAX_MISTAKES_COUNT} from "./const";
+import {extend, GameType, MAX_MISTAKES_COUNT, MAX_TIME} from "./const";
 import questions from "./mocks/questions";
 
 const initialState = {
   mistakes: 0,
   step: -1,
+  timer: MAX_TIME,
   questions,
 };
 
 const ActionType = {
   INCREMENT_MISTAKES: `INCREMENT_MISTAKES`,
   INCREMENT_STEP: `INCREMENT_STEP`,
+  DECREMENT_TIMER: `DECREMENT_TIMER`,
   RESET_GAME: `RESET_GAME`,
 };
 
@@ -47,6 +49,13 @@ const ActionCreator = {
     };
   },
 
+  decrementTimer: () => {
+    return {
+      type: ActionType.DECREMENT_TIMER,
+      payload: 1,
+    };
+  }
+
   // resetGame: () => ({
   //   type: ActionType.RESET_GAME,
   // }),
@@ -76,6 +85,17 @@ const reducer = (state = initialState, action) => {
           mistakes: state.mistakes + action.payload,
         });
       }
+      break;
+
+    case ActionType.DECREMENT_TIMER:
+      if (state.timer <= 0) {
+        return extend({}, initialState);
+      }
+
+      return extend(state, {
+        timer: state.timer - action.payload,
+      });
+
     // case ActionType.RESET_GAME:
     //   return extend({}, initialState);
   }
