@@ -14,7 +14,7 @@ it(`Should welcome button be pressed`, () => {
       <WelcomeScreen
         time={4}
         errorCount={2}
-        onStartButtonClick={onWelcomeButtonClick}
+        onWelcomeScreenClick={onWelcomeButtonClick}
       />
   );
 
