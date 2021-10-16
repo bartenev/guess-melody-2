@@ -13,8 +13,11 @@ describe(`GameScreen is rendered correctly`, () => {
           mistakes={1}
         >
           {children}
-        </GameScreen>
-    ).toJSON();
+        </GameScreen>, {
+          createNodeMock: () => {
+            return {};
+          }
+        }).toJSON();
 
     expect(tree).toMatchSnapshot();
   });
@@ -26,8 +29,11 @@ describe(`GameScreen is rendered correctly`, () => {
           mistakes={1}
         >
           {children}
-        </GameScreen>
-    ).toJSON();
+        </GameScreen>, {
+          createNodeMock: () => {
+            return {};
+          }
+        }).toJSON();
 
     expect(tree).toMatchSnapshot();
   });

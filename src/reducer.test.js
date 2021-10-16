@@ -161,6 +161,13 @@ describe(`Action creators work correctly`, () => {
     });
   });
 
+  it(`Action creator for incrementing step returns correct action`, () => {
+    expect(ActionCreator.decrementTimer()).toEqual({
+      type: ActionType.DECREMENT_TIMER,
+      payload: 1,
+    });
+  });
+
   it(`Action creator for incrementing mistake returns action with 0 payload if answer for artist is correct`, () => {
     expect(ActionCreator.incrementMistake({
       type: `artist`,
@@ -283,6 +290,7 @@ describe(`Reducer works correctly`, () => {
     expect(reducer(undefined, {})).toEqual({
       step: -1,
       mistakes: 0,
+      timer: 300,
       questions,
     });
   });
@@ -291,6 +299,7 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: -1,
       mistakes: 0,
+      timer: 300,
       questions,
     }, {
       type: `INCREMENT_STEP`,
@@ -298,12 +307,14 @@ describe(`Reducer works correctly`, () => {
     })).toEqual({
       step: 0,
       mistakes: 0,
+      timer: 300,
       questions,
     });
 
     expect(reducer({
       step: -1,
       mistakes: 0,
+      timer: 300,
       questions,
     }, {
       type: `INCREMENT_STEP`,
@@ -311,6 +322,7 @@ describe(`Reducer works correctly`, () => {
     })).toEqual({
       step: -1,
       mistakes: 0,
+      timer: 300,
       questions,
     });
   });
@@ -319,6 +331,7 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: 0,
       mistakes: 0,
+      timer: 300,
       questions,
     }, {
       type: `INCREMENT_MISTAKES`,
@@ -326,12 +339,14 @@ describe(`Reducer works correctly`, () => {
     })).toEqual({
       step: 0,
       mistakes: 1,
+      timer: 300,
       questions,
     });
 
     expect(reducer({
       step: -1,
       mistakes: 0,
+      timer: 300,
       questions,
     }, {
       type: `INCREMENT_MISTAKES`,
@@ -339,6 +354,39 @@ describe(`Reducer works correctly`, () => {
     })).toEqual({
       step: -1,
       mistakes: 0,
+      timer: 300,
+      questions,
+    });
+  });
+
+  it(`Reducer should decrement timer by a given value`, () => {
+    expect(reducer({
+      step: 1,
+      mistakes: 0,
+      timer: 300,
+      questions,
+    }, {
+      type: `DECREMENT_TIMER`,
+      payload: 1,
+    })).toEqual({
+      step: 1,
+      mistakes: 0,
+      timer: 299,
+      questions,
+    });
+
+    expect(reducer({
+      step: 1,
+      mistakes: 0,
+      timer: 300,
+      questions,
+    }, {
+      type: `DECREMENT_TIMER`,
+      payload: 0,
+    })).toEqual({
+      step: 1,
+      mistakes: 0,
+      timer: 300,
       questions,
     });
   });
@@ -347,6 +395,7 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: 1000000,
       mistakes: 12309,
+      timer: 300,
       questions,
     }, {
       type: `INCREMENT_MISTAKES`,
@@ -354,6 +403,22 @@ describe(`Reducer works correctly`, () => {
     })).toEqual({
       step: -1,
       mistakes: 0,
+      timer: 300,
+      questions,
+    });
+
+    expect(reducer({
+      step: 2,
+      mistakes: 2,
+      timer: 0,
+      questions,
+    }, {
+      type: `DECREMENT_TIMER`,
+      payload: 1,
+    })).toEqual({
+      step: -1,
+      mistakes: 0,
+      timer: 300,
       questions,
     });
   });
