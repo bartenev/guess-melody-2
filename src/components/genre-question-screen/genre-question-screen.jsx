@@ -39,6 +39,7 @@ class GenreQuestionScreen extends PureComponent {
                     this.setState({
                       answers: [...userAnswers.slice(0, i), value, ...userAnswers.slice(i + 1)],
                     });
+                    console.log(this.state.answers);
                   }}/>
                 <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
               </div>
