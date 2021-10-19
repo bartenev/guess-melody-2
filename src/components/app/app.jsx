@@ -8,6 +8,8 @@ import GameScreen from "../game-screen/game-screen";
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen";
 import WelcomeScreen from "../welcome-screen/welcome-screen";
 import {MAX_MISTAKES_COUNT} from "../../const";
+import withActivePlayer from "../../hocs/with-active-player/with-active-player";
+const GenreQuestionScreenWrapped = withActivePlayer(GenreQuestionScreen);
 
 class App extends PureComponent {
   static getScreen(props) {
@@ -30,7 +32,7 @@ class App extends PureComponent {
         <GameScreen
           type={GameType.GENRE}
         >
-          <GenreQuestionScreen
+          <GenreQuestionScreenWrapped
             question={currentQuestion}
             onAnswer={onUserAnswer}
           />
