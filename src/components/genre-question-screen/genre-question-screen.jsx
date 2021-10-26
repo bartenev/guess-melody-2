@@ -28,7 +28,7 @@ class GenreQuestionScreen extends PureComponent {
         >
           {answers.map((answer, i) => (
             <div key={`${i}-${answer.src}`} className="track">
-              {renderPlayer(answer, i)};
+              {renderPlayer(answer, i)}
               <div className="game__answer">
                 <input className="game__input visually-hidden" type="checkbox" name="answer"
                   value={`answer-${i}`}
@@ -39,7 +39,6 @@ class GenreQuestionScreen extends PureComponent {
                     this.setState({
                       answers: [...userAnswers.slice(0, i), value, ...userAnswers.slice(i + 1)],
                     });
-                    console.log(this.state.answers);
                   }}/>
                 <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
               </div>
