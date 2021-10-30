@@ -10,6 +10,7 @@ import WelcomeScreen from "../welcome-screen/welcome-screen";
 import {MAX_MISTAKES_COUNT} from "../../const";
 import withActivePlayer from "../../hocs/with-active-player/with-active-player";
 import withTransformProps from "../../hocs/with-transform-props/with-transform-props";
+import withAnswers from "../../hocs/with-answers/with-answers";
 
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
@@ -28,7 +29,7 @@ const transformPlayerToQuestion = (props) => {
 };
 
 
-const GenreQuestionScreenWrapped = withActivePlayer(withTransformProps(transformPlayerToAnswer)(GenreQuestionScreen));
+const GenreQuestionScreenWrapped = withActivePlayer(withAnswers(withTransformProps(transformPlayerToAnswer)(GenreQuestionScreen)));
 const ArtistQuestionScreenWrapped = withActivePlayer(withTransformProps(transformPlayerToQuestion)(ArtistQuestionScreen));
 
 class App extends PureComponent {

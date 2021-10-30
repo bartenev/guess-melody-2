@@ -6,15 +6,15 @@ class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      answers: [false, false, false, false],
-    };
+    // this.state = {
+    //   answers: [false, false, false, false],
+    // };
   }
 
   render() {
-    const {onAnswer, question, renderAnswer} = this.props;
+    const {onAnswer, question, renderAnswer, userAnswers, changeAnswers} = this.props;
     const {answers, genre} = question;
-    const {answers: userAnswers} = this.state;
+    // const {answers: userAnswers} = this.state;
 
     return (
       <section className="game__screen">
@@ -23,7 +23,7 @@ class GenreQuestionScreen extends PureComponent {
           className="game__tracks"
           onSubmit={(evt) => {
             evt.preventDefault();
-            onAnswer(question, this.state.answers);
+            onAnswer(question, answers);
           }}
         >
           {answers.map((answer, i) => (
@@ -36,9 +36,10 @@ class GenreQuestionScreen extends PureComponent {
                   checked={userAnswers[i]}
                   onChange={(evt) => {
                     const value = evt.target.checked;
-                    this.setState({
-                      answers: [...userAnswers.slice(0, i), value, ...userAnswers.slice(i + 1)],
-                    });
+                    changeAnswers(i, value);
+                    // this.setState({
+                    //   answers: [...userAnswers.slice(0, i), value, ...userAnswers.slice(i + 1)],
+                    // });
                   }}/>
                 <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
               </div>
@@ -63,6 +64,8 @@ GenreQuestionScreen.propTypes = {
     })).isRequired,
   }).isRequired,
   renderAnswer: PropTypes.func.isRequired,
+  changeAnswers: PropTypes.func.isRequired,
+  userAnswers: PropTypes.arrayOf(PropTypes.bool),
 };
 
 export default GenreQuestionScreen;
