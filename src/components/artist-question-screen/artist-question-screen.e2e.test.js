@@ -38,6 +38,7 @@ const mockEvent = {
 it(`Click on user answer should pass to the callback data-object from which this answer was created`, () => {
   const {question} = mock;
   const onAnswer = jest.fn();
+  const renderQuestion = jest.fn();
 
   const userAnswer = {
     artist: `one`,
@@ -48,6 +49,7 @@ it(`Click on user answer should pass to the callback data-object from which this
       <ArtistQuestionScreen
         onAnswer={onAnswer}
         question={question}
+        renderQuestion={renderQuestion}
       />
   );
 

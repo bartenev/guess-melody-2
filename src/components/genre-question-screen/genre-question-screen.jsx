@@ -51,7 +51,7 @@ GenreQuestionScreen.propTypes = {
   }).isRequired,
   renderAnswer: PropTypes.func.isRequired,
   changeAnswers: PropTypes.func.isRequired,
-  userAnswers: PropTypes.arrayOf(PropTypes.bool),
+  userAnswers: PropTypes.arrayOf(PropTypes.bool).isRequired,
 };
 
 export default GenreQuestionScreen;

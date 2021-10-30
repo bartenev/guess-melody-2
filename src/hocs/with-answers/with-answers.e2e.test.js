@@ -1,17 +1,17 @@
 import React from "react";
 import {configure, shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import withActivePlayer from "./with-active-player";
+import withAnswers from "./with-answers";
 
 configure({
   adapter: new Adapter(),
 });
 
 const MockComponent = () => <div />;
-const MockComponentWrapped = withActivePlayer(MockComponent);
+const MockComponentWrapped = withAnswers(MockComponent);
 
-it(`Paused by default`, () => {
+it(`No answer selected by default`, () => {
   const wrapper = shallow(<MockComponentWrapped />);
 
-  expect(wrapper.state().activePlayer).toEqual(-1);
+  expect(wrapper.state().userAnswers).toEqual([false, false, false, false]);
 });

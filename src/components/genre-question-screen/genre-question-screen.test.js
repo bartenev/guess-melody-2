@@ -26,11 +26,18 @@ const question = {
 };
 
 it(`GenreQuestionScreen is rendered correctly`, () => {
+  const changeAnswers = jest.fn();
+  const renderAnswer = jest.fn();
+  const userAnswers = [true, false, true, true];
+
   const tree = renderer
     .create((
       <GenreQuestionScreen
         onAnswer={() => {}}
         question={question}
+        changeAnswers={changeAnswers}
+        renderAnswer={renderAnswer}
+        userAnswers={userAnswers}
       />
     ), {
       createNodeMock: () => {

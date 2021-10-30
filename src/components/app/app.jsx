@@ -29,8 +29,14 @@ const transformPlayerToQuestion = (props) => {
 };
 
 
-const GenreQuestionScreenWrapped = withActivePlayer(withAnswers(withTransformProps(transformPlayerToAnswer)(GenreQuestionScreen)));
-const ArtistQuestionScreenWrapped = withActivePlayer(withTransformProps(transformPlayerToQuestion)(ArtistQuestionScreen));
+const GenreQuestionScreenWrapped = withActivePlayer(
+    withAnswers(
+        withTransformProps(transformPlayerToAnswer)(GenreQuestionScreen)
+    )
+);
+const ArtistQuestionScreenWrapped = withActivePlayer(
+    withTransformProps(transformPlayerToQuestion)(ArtistQuestionScreen)
+);
 
 class App extends PureComponent {
   static getScreen(props) {
