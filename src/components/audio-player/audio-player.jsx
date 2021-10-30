@@ -8,7 +8,7 @@ export default class AudioPlayer extends PureComponent {
     this._audioRef = createRef();
 
     this.state = {
-      progress: 0,
+      // progress: 0,
       isLoading: true,
     };
   }
@@ -25,11 +25,11 @@ export default class AudioPlayer extends PureComponent {
       });
     };
 
-    audio.ontimeupdate = () => {
-      this.setState({
-        progress: audio.currentTime
-      });
-    };
+    // audio.ontimeupdate = () => {
+    //   this.setState({
+    //     progress: audio.currentTime
+    //   });
+    // };
   }
 
   componentWillUnmount() {
