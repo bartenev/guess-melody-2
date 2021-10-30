@@ -9,8 +9,27 @@ import GenreQuestionScreen from "../genre-question-screen/genre-question-screen"
 import WelcomeScreen from "../welcome-screen/welcome-screen";
 import {MAX_MISTAKES_COUNT} from "../../const";
 import withActivePlayer from "../../hocs/with-active-player/with-active-player";
-const GenreQuestionScreenWrapped = withActivePlayer(GenreQuestionScreen);
-const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
+import withTransformProps from "../../hocs/with-transform-props/with-transform-props";
+
+const transformPlayerToAnswer = (props) => {
+  const newProps = Object.assign({}, props, {
+    renderAnswer: props.renderPlayer,
+  });
+  delete newProps.renderPlayer;
+  return newProps;
+};
+
+const transformPlayerToQuestion = (props) => {
+  const newProps = Object.assign({}, props, {
+    renderQuestion: props.renderPlayer,
+  });
+  delete newProps.renderPlayer;
+  return newProps;
+};
+
+
+const GenreQuestionScreenWrapped = withActivePlayer(withTransformProps(transformPlayerToAnswer)(GenreQuestionScreen));
+const ArtistQuestionScreenWrapped = withActivePlayer(withTransformProps(transformPlayerToQuestion)(ArtistQuestionScreen));
 
 class App extends PureComponent {
   static getScreen(props) {

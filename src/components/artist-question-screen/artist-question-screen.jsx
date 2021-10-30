@@ -9,7 +9,7 @@ class ArtistQuestionScreen extends PureComponent {
 
 
   render() {
-    const {onAnswer, question, renderPlayer} = this.props;
+    const {onAnswer, question, renderQuestion} = this.props;
     const {answers, song} = question;
 
     return (
@@ -17,7 +17,7 @@ class ArtistQuestionScreen extends PureComponent {
         <h2 className="game__title">Кто исполняет эту песню?</h2>
         <div className="game__track">
           <div className="track">
-            {renderPlayer(song, 0)}
+            {renderQuestion(song, 0)}
           </div>
         </div>
 
@@ -59,7 +59,7 @@ ArtistQuestionScreen.propTypes = {
       picture: PropTypes.string.isRequired,
     })).isRequired,
   }).isRequired,
-  renderPlayer: PropTypes.func.isRequired,
+  renderQuestion: PropTypes.func.isRequired,
 };
 
 export default ArtistQuestionScreen;

@@ -12,7 +12,7 @@ class GenreQuestionScreen extends PureComponent {
   }
 
   render() {
-    const {onAnswer, question, renderPlayer} = this.props;
+    const {onAnswer, question, renderAnswer} = this.props;
     const {answers, genre} = question;
     const {answers: userAnswers} = this.state;
 
@@ -28,7 +28,7 @@ class GenreQuestionScreen extends PureComponent {
         >
           {answers.map((answer, i) => (
             <div key={`${i}-${answer.src}`} className="track">
-              {renderPlayer(answer, i)}
+              {renderAnswer(answer, i)}
               <div className="game__answer">
                 <input className="game__input visually-hidden" type="checkbox" name="answer"
                   value={`answer-${i}`}
@@ -62,7 +62,7 @@ GenreQuestionScreen.propTypes = {
       genre: PropTypes.string.isRequired,
     })).isRequired,
   }).isRequired,
-  renderPlayer: PropTypes.func.isRequired,
+  renderAnswer: PropTypes.func.isRequired,
 };
 
 export default GenreQuestionScreen;
