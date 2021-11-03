@@ -17,7 +17,7 @@ const GenreQuestionScreen = (props) => {
         }}
       >
         {answers.map((answer, i) => (
-          <div key={`${i}-${answer.src}`} className="track">
+          <div key={`${genre}-${answer.src}`} className="track">
             {renderAnswer(answer, i)}
             <div className="game__answer">
               <input className="game__input visually-hidden" type="checkbox" name="answer"

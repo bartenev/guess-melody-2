@@ -3,7 +3,7 @@ import {
   isArtistAnswerCorrect,
   isGenreAnswerCorrect,
   reducer
-} from "./reducer";
+} from "./game";
 
 const questions = [
   {
