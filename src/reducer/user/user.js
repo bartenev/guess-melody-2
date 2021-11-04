@@ -1,7 +1,7 @@
 import {extend} from "../../const";
 
 const initialState = {
-  isAuthorizationRequired: false,
+  isAuthorizationRequired: true,
 };
 
 const ActionType = {

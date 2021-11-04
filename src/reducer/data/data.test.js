@@ -1,17 +1,17 @@
 import MockAdapter from "axios-mock-adapter";
-import {createAPI} from "../../api";
+import {createApi} from "../../api";
 import {
   ActionType,
-  Operation,
+  Operations,
 } from "./data";
 
 
 describe(`Reducer works correctly`, () => {
   it(`Should make a correct API call to /questions`, function () {
     const dispatch = jest.fn();
-    const api = createAPI(dispatch);
+    const api = createApi(dispatch);
     const apiMock = new MockAdapter(api);
-    const questionLoader = Operation.loadQuestions();
+    const questionLoader = Operations.loadQuestions();
 
     apiMock
       .onGet(`/questions`)

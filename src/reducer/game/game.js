@@ -2,9 +2,10 @@ import {extend, GameType, MAX_MISTAKES_COUNT, MAX_TIME} from "../../const";
 
 const initialState = {
   mistakes: 0,
-  maxMistakes: 3,
+  maxMistakes: MAX_MISTAKES_COUNT,
   step: -1,
   timer: MAX_TIME,
+  maxTimer: MAX_TIME,
 };
 
 const ActionType = {
@@ -63,28 +64,14 @@ const ActionCreator = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.INCREMENT_STEP:
-      let nextStep = state.step + action.payload;
-      // console.log(state);
-      // if (nextStep >= state.questions.length) {
-      //   return extend({}, initialState);
-      // }
-
       return extend(state, {
-        step: nextStep,
+        step: state.step + action.payload,
       });
 
     case ActionType.INCREMENT_MISTAKES:
-      if (state.step > -1) {
-        const mistakes = state.mistakes + action.payload;
-
-        // if (mistakes >= MAX_MISTAKES_COUNT) {
-        //   return extend({}, initialState);
-        // }
-        return extend(state, {
-          mistakes: state.mistakes + action.payload,
-        });
-      }
-      break;
+      return extend(state, {
+        mistakes: state.mistakes + action.payload,
+      });
 
     case ActionType.DECREMENT_TIMER:
       if (state.timer <= 0) {

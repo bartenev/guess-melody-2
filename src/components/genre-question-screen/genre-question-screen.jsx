@@ -13,11 +13,11 @@ const GenreQuestionScreen = (props) => {
         className="game__tracks"
         onSubmit={(evt) => {
           evt.preventDefault();
-          onAnswer(question, answers);
+          onAnswer();
         }}
       >
         {answers.map((answer, i) => (
-          <div key={`${genre}-${answer.src}`} className="track">
+          <div key={`${i}-${answer.src}`} className="track">
             {renderAnswer(answer, i)}
             <div className="game__answer">
               <input className="game__input visually-hidden" type="checkbox" name="answer"

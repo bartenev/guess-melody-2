@@ -36,7 +36,7 @@ const GameOverScreen = (props) => {
 };
 
 GameOverScreen.propTypes = {
-  type: PropTypes.oneOf([GameOverType.MAX_MISTAKES, GameOverType.MAX_TIME]),
+  type: PropTypes.oneOf([GameOverType.MAX_MISTAKES, GameOverType.MAX_TIME]).isRequired,
   onReplayButtonClick: PropTypes.func.isRequired,
 };
 

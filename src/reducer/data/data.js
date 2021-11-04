@@ -19,7 +19,7 @@ const Operations = {
   loadQuestions: (dispatch, _getState, api) => {
     return api.get(`/questions`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         dispatch(ActionCreator.loadQuestions(response.data));
       });
   }

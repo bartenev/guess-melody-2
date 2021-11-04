@@ -14,6 +14,11 @@ export const getTimer = (state) => {
   return state[NAME_SPACE].timer;
 };
 
+export const getMaxTimer = (state) => {
+  return state[NAME_SPACE].maxTimer;
+};
+
+
 export const getMaxMistakes = (state) => {
   return state[NAME_SPACE].maxMistakes;
 };
