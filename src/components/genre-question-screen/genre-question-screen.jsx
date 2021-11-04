@@ -13,7 +13,7 @@ const GenreQuestionScreen = (props) => {
         className="game__tracks"
         onSubmit={(evt) => {
           evt.preventDefault();
-          onAnswer(question, answers);
+          onAnswer();
         }}
       >
         {answers.map((answer, i) => (

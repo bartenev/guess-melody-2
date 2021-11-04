@@ -56,6 +56,11 @@ it(`App correctly renders first screen`, () => {
       onUserAnswer={jest.fn()}
       onWelcomeScreenClick={jest.fn()}
       step={-1}
+      isAuthorizationRequired={false}
+      maxMistakes={3}
+      maxTimer={300}
+      mistakes={0}
+      timer={300}
     />)
   .toJSON();
 

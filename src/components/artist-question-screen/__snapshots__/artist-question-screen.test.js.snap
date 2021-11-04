@@ -37,6 +37,7 @@ exports[`ArtistQuestionScreen is rendered correctly 1`] = `
         <img
           alt="John Snow"
           className="artist__picture"
+          src="https://lh3.googleusercontent.com/proxy/ELVSk8lMwUNadyXt60N3ckhwjkObTuF7QRCCk5SkhsdUfw7aUO_tFB2XEz99xPS5wePQ9Ey3H6aYGyCAScZbO_1vm6igY_WmCoPkojjNIbdLWOYgbNRPV1xY2h5a5dYL2AWZkt1NM57BkGnBixfw89nTmJSEFsvQvdfgVB-ug4incD1Qe3NUj74"
         />
         John Snow
       </label>
@@ -59,6 +60,7 @@ exports[`ArtistQuestionScreen is rendered correctly 1`] = `
         <img
           alt="Jack Daniels"
           className="artist__picture"
+          src="https://lh3.googleusercontent.com/proxy/ELVSk8lMwUNadyXt60N3ckhwjkObTuF7QRCCk5SkhsdUfw7aUO_tFB2XEz99xPS5wePQ9Ey3H6aYGyCAScZbO_1vm6igY_WmCoPkojjNIbdLWOYgbNRPV1xY2h5a5dYL2AWZkt1NM57BkGnBixfw89nTmJSEFsvQvdfgVB-ug4incD1Qe3NUj74"
         />
         Jack Daniels
       </label>
@@ -81,6 +83,7 @@ exports[`ArtistQuestionScreen is rendered correctly 1`] = `
         <img
           alt="Jim Beam"
           className="artist__picture"
+          src="https://lh3.googleusercontent.com/proxy/ELVSk8lMwUNadyXt60N3ckhwjkObTuF7QRCCk5SkhsdUfw7aUO_tFB2XEz99xPS5wePQ9Ey3H6aYGyCAScZbO_1vm6igY_WmCoPkojjNIbdLWOYgbNRPV1xY2h5a5dYL2AWZkt1NM57BkGnBixfw89nTmJSEFsvQvdfgVB-ug4incD1Qe3NUj74"
         />
         Jim Beam
       </label>
