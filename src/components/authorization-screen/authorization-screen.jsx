@@ -2,6 +2,8 @@ import React, {createRef} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Operations} from "../../reducer/user/user";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../../const";
 
 const AuthorizationScreen = (props) => {
   const {onReplayButtonClick, logIn} = props;
@@ -33,14 +35,11 @@ const AuthorizationScreen = (props) => {
         </p>
         <button className="login__button button" type="submit">Войти</button>
       </form>
-      <button
+      <Link
         className="replay"
-        type="button"
-        onClick={(evt) => {
-          evt.preventDefault();
-          onReplayButtonClick();
-        }}
-      >Сыграть ещё раз</button>
+        to={AppRoute.ROOT}
+        onClick={onReplayButtonClick}
+      >Сыграть ещё раз</Link>
     </section>
   );
 };

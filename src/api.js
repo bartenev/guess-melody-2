@@ -1,7 +1,6 @@
 import axios from "axios";
-import {ActionCreator} from "./reducer/user/user";
 
-export const createApi = (dispatch) => {
+export const createApi = (onLoginFail) => {
   const api = axios.create({
     baseURL: `https://5.react.pages.academy/guess-melody`,
     timeout: 1000 * 5,
@@ -9,11 +8,14 @@ export const createApi = (dispatch) => {
   });
 
   const onSuccess = (response) => response;
+
   const onFail = (err) => {
-    if (err.response.status === 403) {
-      dispatch(ActionCreator.requireAuthorization(true));
+    if (err.status === 401) {
+      onLoginFail();
+      throw err;
     }
-    return err;
+
+    throw err;
   };
 
   api.interceptors.response.use(onSuccess, onFail);

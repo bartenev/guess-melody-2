@@ -15,3 +15,10 @@ export const GameOverType = {
   MAX_MISTAKES: `MAX_MISTAKES`,
   MAX_TIME: `MAX_TIME`,
 };
+
+export const AppRoute = {
+  LOGIN: `/login`,
+  LOSE: `/lose`,
+  RESULT: `/result`,
+  ROOT: `/`,
+};

@@ -9,13 +9,18 @@ import {compose} from "recompose";
 import {createApi} from "./api";
 import {Operations} from "./reducer/data/data";
 import {BrowserRouter} from "react-router-dom";
+import {ActionCreator} from "./reducer/user/user";
 
 const init = () => {
   const settings = {
     gameTime: 5,
   };
 
-  const api = createApi((...args) => store.dispatch(...args));
+  const onUnauthorized = () => {
+    store.dispatch(ActionCreator.requireAuthorization(true));
+  };
+
+  const api = createApi(onUnauthorized);
 
   const store = createStore(
       reducer,

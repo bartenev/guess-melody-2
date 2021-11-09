@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {GameOverType, GameType} from "../../const";
+import {AppRoute, GameOverType, GameType} from "../../const";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer/game/game";
@@ -15,10 +15,8 @@ import {getMaxMistakes, getMaxTimer, getMistakes, getStep, getTimer} from "../..
 import {getQuestions} from "../../reducer/data/selectors";
 import GameOverScreen from "../game-over-screen/game-over-screen";
 import WinScreen from "../win-screen/win-screen";
-import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import AuthorizationScreen from "../authorization-screen/authorization-screen";
-import {Operations} from "../../reducer/user/user";
-import {Switch, Route} from "react-router-dom";
+import {Switch, Route, Redirect} from "react-router-dom";
 
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
@@ -53,15 +51,9 @@ class App extends PureComponent {
       step, mistakes,
       maxMistakes,
       timer,
-      maxTimer,
       onUserAnswer,
-      isAuthorizationRequired,
       onWelcomeScreenClick,
-      resetGame,
-      checkAuth,
     } = props;
-
-    checkAuth();
 
     if (step === -1) {
       return (
@@ -73,42 +65,16 @@ class App extends PureComponent {
       );
     }
 
-    if (mistakes >= maxMistakes) {
+    if (mistakes >= maxMistakes || timer <= 0) {
       return (
-        <GameOverScreen
-          type={GameOverType.MAX_MISTAKES}
-          onReplayButtonClick={resetGame}
-        />
-      );
-    }
-
-    if (timer <= 0) {
-      return (
-        <GameOverScreen
-          type={GameOverType.MAX_TIME}
-          onReplayButtonClick={resetGame}
-        />
+        <Redirect to={AppRoute.LOSE} />
       );
     }
 
     if (step >= questions.length) {
-      if (isAuthorizationRequired === false) {
-        return (
-          <WinScreen
-            time={maxTimer - timer}
-            mistakes={mistakes}
-            points={questions.length - mistakes}
-            onReplayButtonClick={resetGame}
-          />
-        );
-      } else {
-        return (
-          <AuthorizationScreen
-            onReplayButtonClick={resetGame}
-          />
-        );
-      }
-
+      return (
+        <Redirect to={AppRoute.RESULT} />
+      );
     }
 
     const currentQuestion = questions[step];
@@ -141,11 +107,43 @@ class App extends PureComponent {
   }
 
   render() {
+    const {
+      questions,
+      mistakes,
+      maxMistakes,
+      timer,
+      maxTimer,
+      resetGame,
+    } = this.props;
+
     const screen = App.getScreen(this.props);
+    const gameOverType = mistakes >= maxMistakes ? GameOverType.MAX_MISTAKES : GameOverType.MAX_TIME;
+
     return (
       <Switch>
-        <Route path="/" exact render={() => screen} />
-        <Route path="/auth" exact component={AuthorizationScreen} />
+        <Route path={AppRoute.ROOT} exact render={() => screen} />
+        <Route path={AppRoute.RESULT} exact render={() => (
+          <WinScreen
+            time={maxTimer - timer}
+            mistakes={mistakes}
+            points={questions.length - mistakes}
+            onReplayButtonClick={resetGame}
+          />
+        )}
+        />
+        <Route path={AppRoute.LOSE} exact render={() => (
+          <GameOverScreen
+            type={gameOverType}
+            onReplayButtonClick={resetGame}
+          />
+        )}
+        />
+        <Route path={AppRoute.LOGIN} exact render={() => (
+          <AuthorizationScreen
+            onReplayButtonClick={resetGame}
+          />
+        )}
+        />
       </Switch>
     );
   }
@@ -160,9 +158,8 @@ App.propTypes = {
   maxMistakes: PropTypes.number.isRequired,
   timer: PropTypes.number.isRequired,
   maxTimer: PropTypes.number.isRequired,
-  isAuthorizationRequired: PropTypes.bool.isRequired,
+  resetGame: PropTypes.func.isRequired,
   onWelcomeScreenClick: PropTypes.func.isRequired,
-  checkAuth: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -172,7 +169,6 @@ const mapStateToProps = (state) => ({
   maxMistakes: getMaxMistakes(state),
   timer: getTimer(state),
   maxTimer: getMaxTimer(state),
-  isAuthorizationRequired: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -187,12 +183,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.incrementStep());
     dispatch(ActionCreator.decrementTimer());
   },
-  checkAuth: () => {
-    dispatch(Operations.checkAuth());
-  },
 });
 
 export {App};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
