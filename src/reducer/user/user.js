@@ -2,16 +2,15 @@ import {extend} from "../../const";
 
 const initialState = {
   isAuthorizationRequired: true,
-  loginInfo: {
+  userInfo: {
     id: null,
     email: null,
-    password: null,
   }
 };
 
 const ActionType = {
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
-  LOGIN: `LOGIN`
+  SET_USER_INFO: `SET_USER_INFO`,
 };
 
 const ActionCreator = {
@@ -19,23 +18,34 @@ const ActionCreator = {
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
   }),
-  login: (data) => ({
-    type: ActionType.LOGIN,
-    payload: data,
-  }),
+  setUserInfo: (userInfo) => ({
+    type: ActionType.SET_USER_INFO,
+    payload: userInfo,
+  })
 };
 
 const Operations = {
-  login: (dispatch, _getState, api, email, password) => {
+  checkAuth: () => (dispatch, _getState, api) => {
+    return api.get(`/login`)
+      .then((response) => {
+        dispatch(ActionCreator.requireAuthorization(false));
+        dispatch(ActionCreator.setUserInfo(response.data));
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
+  logIn: (authData) => (dispatch, _getState, api) => {
     return api.post(`/login`, {
-      email,
-      password,
+      email: authData.email,
+      password: authData.password,
     })
       .then((response) => {
-        console.log(response);
-        dispatch(ActionCreator.login(response.data));
+        dispatch(ActionCreator.requireAuthorization(false));
+        dispatch(ActionCreator.setUserInfo(response.data));
       });
-  }
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -44,9 +54,9 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         isAuthorizationRequired: action.payload,
       });
-    case ActionType.LOGIN:
+    case ActionType.SET_USER_INFO:
       return extend(state, {
-        loginInfo: action.payload,
+        userInfo: action.payload,
       });
   }
 

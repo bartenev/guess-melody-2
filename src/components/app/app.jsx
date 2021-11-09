@@ -17,6 +17,7 @@ import GameOverScreen from "../game-over-screen/game-over-screen";
 import WinScreen from "../win-screen/win-screen";
 import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import AuthorizationScreen from "../authorization-screen/authorization-screen";
+import {Operations} from "../../reducer/user/user";
 
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
@@ -55,9 +56,12 @@ class App extends PureComponent {
       maxTimer,
       onUserAnswer,
       isAuthorizationRequired,
-      onWelcomeScreenClick
-      , resetGame
+      onWelcomeScreenClick,
+      resetGame,
+      checkAuth,
     } = props;
+
+    checkAuth();
 
     if (step === -1) {
       return (
@@ -155,6 +159,7 @@ App.propTypes = {
   maxTimer: PropTypes.number.isRequired,
   isAuthorizationRequired: PropTypes.bool.isRequired,
   onWelcomeScreenClick: PropTypes.func.isRequired,
+  checkAuth: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -178,6 +183,9 @@ const mapDispatchToProps = (dispatch) => ({
   onWelcomeScreenClick: () => {
     dispatch(ActionCreator.incrementStep());
     dispatch(ActionCreator.decrementTimer());
+  },
+  checkAuth: () => {
+    dispatch(Operations.checkAuth());
   },
 });
 
