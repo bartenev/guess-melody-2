@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {Operations} from "../../reducer/user/user";
 
 const AuthorizationScreen = (props) => {
-  const {time, mistakes, points, onReplayButtonClick, logIn} = props;
+  const {onReplayButtonClick, logIn} = props;
   const loginRef = createRef();
   const passwordRef = createRef();
 
@@ -12,8 +12,7 @@ const AuthorizationScreen = (props) => {
     <section className="login">
       <div className="login__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"/></div>
       <h2 className="login__title">Вы настоящий меломан!</h2>
-      <p className="login__total">За {Math.floor(time / 60)} минуты и {time % 60} секунд вы набрали {points} баллов (N быстрых), совершив {mistakes} ошибки</p>
-      <p className="login__text">Хотите сравнить свой результат с предыдущими попытками? Представтесь!</p>
+      <p className="login__text">Хотите узнать свой результат? Представтесь!</p>
       <form
         className="login__form" action=""
         onSubmit={(evt) => {
@@ -47,9 +46,6 @@ const AuthorizationScreen = (props) => {
 };
 
 AuthorizationScreen.propTypes = {
-  time: PropTypes.number.isRequired,
-  mistakes: PropTypes.number.isRequired,
-  points: PropTypes.number.isRequired,
   onReplayButtonClick: PropTypes.func.isRequired,
   logIn: PropTypes.func.isRequired,
 };

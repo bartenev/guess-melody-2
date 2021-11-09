@@ -8,6 +8,7 @@ import thunk from "redux-thunk";
 import {compose} from "recompose";
 import {createApi} from "./api";
 import {Operations} from "./reducer/data/data";
+import {BrowserRouter} from "react-router-dom";
 
 const init = () => {
   const settings = {
@@ -28,9 +29,11 @@ const init = () => {
 
   ReactDOM.render(
       <Provider store={store}>
-        <App
-          gameTime={settings.gameTime}
-        />
+        <BrowserRouter>
+          <App
+            gameTime={settings.gameTime}
+          />
+        </BrowserRouter>
       </Provider>,
       document.querySelector(`#root`)
   );

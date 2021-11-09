@@ -18,6 +18,7 @@ import WinScreen from "../win-screen/win-screen";
 import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import AuthorizationScreen from "../authorization-screen/authorization-screen";
 import {Operations} from "../../reducer/user/user";
+import {Switch, Route} from "react-router-dom";
 
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
@@ -34,7 +35,6 @@ const transformPlayerToQuestion = (props) => {
   delete newProps.renderPlayer;
   return newProps;
 };
-
 
 const GenreQuestionScreenWrapped = withActivePlayer(
     withAnswers(
@@ -104,9 +104,6 @@ class App extends PureComponent {
       } else {
         return (
           <AuthorizationScreen
-            time={maxTimer - timer}
-            mistakes={mistakes}
-            points={questions.length - mistakes}
             onReplayButtonClick={resetGame}
           />
         );
@@ -144,7 +141,13 @@ class App extends PureComponent {
   }
 
   render() {
-    return App.getScreen(this.props);
+    const screen = App.getScreen(this.props);
+    return (
+      <Switch>
+        <Route path="/" exact render={() => screen} />
+        <Route path="/auth" exact component={AuthorizationScreen} />
+      </Switch>
+    );
   }
 }
 
