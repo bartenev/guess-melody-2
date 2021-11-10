@@ -17,6 +17,10 @@ import GameOverScreen from "../game-over-screen/game-over-screen";
 import WinScreen from "../win-screen/win-screen";
 import AuthorizationScreen from "../authorization-screen/authorization-screen";
 import {Switch, Route, Redirect} from "react-router-dom";
+import {PrivateRoute} from "../private-route/private-route";
+import {getAuthorizationStatus} from "../../reducer/user/selectors";
+import history from "../../history";
+import {AuthorizationStatus} from "../../reducer/user/user";
 
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
@@ -53,6 +57,7 @@ class App extends PureComponent {
       timer,
       onUserAnswer,
       onWelcomeScreenClick,
+      authorizationStatus
     } = props;
 
     if (step === -1) {
@@ -66,15 +71,20 @@ class App extends PureComponent {
     }
 
     if (mistakes >= maxMistakes || timer <= 0) {
-      return (
-        <Redirect to={AppRoute.LOSE} />
-      );
+      return history.push(AppRoute.LOSE);
+      // <Redirect to={AppRoute.LOSE} />
+      // );
     }
 
     if (step >= questions.length) {
-      return (
-        <Redirect to={AppRoute.RESULT} />
-      );
+      if (authorizationStatus === AuthorizationStatus.AUTH) {
+        return history.push(AppRoute.RESULT);
+      } else if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+        return history.push(AppRoute.LOGIN);
+      }
+      // return (
+      //   <Redirect to={AppRoute.RESULT} />
+      // );
     }
 
     const currentQuestion = questions[step];
@@ -114,6 +124,7 @@ class App extends PureComponent {
       timer,
       maxTimer,
       resetGame,
+      authorizationStatus
     } = this.props;
 
     const screen = App.getScreen(this.props);
@@ -122,15 +133,6 @@ class App extends PureComponent {
     return (
       <Switch>
         <Route path={AppRoute.ROOT} exact render={() => screen} />
-        <Route path={AppRoute.RESULT} exact render={() => (
-          <WinScreen
-            time={maxTimer - timer}
-            mistakes={mistakes}
-            points={questions.length - mistakes}
-            onReplayButtonClick={resetGame}
-          />
-        )}
-        />
         <Route path={AppRoute.LOSE} exact render={() => (
           <GameOverScreen
             type={gameOverType}
@@ -143,6 +145,19 @@ class App extends PureComponent {
             onReplayButtonClick={resetGame}
           />
         )}
+        />
+        <PrivateRoute
+          path={AppRoute.RESULT}
+          exact
+          authorizationStatus={authorizationStatus}
+          render={() => (
+            <WinScreen
+              time={maxTimer - timer}
+              mistakes={mistakes}
+              points={questions.length - mistakes}
+              onReplayButtonClick={resetGame}
+            />
+          )}
         />
       </Switch>
     );
@@ -160,6 +175,7 @@ App.propTypes = {
   maxTimer: PropTypes.number.isRequired,
   resetGame: PropTypes.func.isRequired,
   onWelcomeScreenClick: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -169,6 +185,7 @@ const mapStateToProps = (state) => ({
   maxMistakes: getMaxMistakes(state),
   timer: getTimer(state),
   maxTimer: getMaxTimer(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

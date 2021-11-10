@@ -8,22 +8,20 @@ import thunk from "redux-thunk";
 import {compose} from "recompose";
 import {createApi} from "./api";
 import {Operations} from "./reducer/data/data";
-import {BrowserRouter} from "react-router-dom";
 import {ActionCreator} from "./reducer/user/user";
 import {Router} from "react-router-dom";
-import {createBrowserHistory} from "history";
 import {AppRoute} from "./const";
+import history from "history";
 
-const history = createBrowserHistory();
 
 const init = () => {
   const settings = {
     gameTime: 5,
   };
 
-  const onUnauthorized = () => {
-    store.dispatch(ActionCreator.requireAuthorization(true));
-  };
+  // const onUnauthorized = () => {
+  //   store.dispatch(ActionCreator.requireAuthorization(true));
+  // };
 
   const api = createApi(() => history.push(AppRoute.LOGIN));
 
