@@ -1,7 +1,12 @@
 import {extend} from "../../const";
 
+const AuthorizationStatus = ({
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+});
+
 const initialState = {
-  isAuthorizationRequired: true,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
   userInfo: {
     id: null,
     email: null,
@@ -28,7 +33,7 @@ const Operations = {
   checkAuth: () => (dispatch, _getState, api) => {
     return api.get(`/login`)
       .then((response) => {
-        dispatch(ActionCreator.requireAuthorization(false));
+        dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
         dispatch(ActionCreator.setUserInfo(response.data));
       })
       .catch((err) => {
@@ -42,7 +47,7 @@ const Operations = {
       password: authData.password,
     })
       .then((response) => {
-        dispatch(ActionCreator.requireAuthorization(false));
+        dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
         dispatch(ActionCreator.setUserInfo(response.data));
       });
   },
@@ -52,7 +57,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.REQUIRED_AUTHORIZATION:
       return extend(state, {
-        isAuthorizationRequired: action.payload,
+        authorizationStatus: action.payload,
       });
     case ActionType.SET_USER_INFO:
       return extend(state, {
@@ -63,4 +68,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export {reducer, ActionType, ActionCreator, Operations};
+export {reducer, ActionType, ActionCreator, Operations, AuthorizationStatus};
