@@ -10,6 +10,8 @@ import {createApi} from "./api";
 import {Operations as DataOperations} from "./reducer/data/data";
 import {Operations as UserOperations} from "./reducer/user/user";
 import {ActionCreator, AuthorizationStatus} from "./reducer/user/user";
+import {Route, Router} from "react-router-dom";
+import history from "./history";
 
 
 const init = () => {
@@ -35,11 +37,13 @@ const init = () => {
   store.dispatch(UserOperations.checkAuth());
 
   ReactDOM.render(
-      <Provider store={store}>
-        <App
-          gameTime={settings.gameTime}
-        />
-      </Provider>,
+      <Router history={history}>
+        <Provider store={store}>
+          <App
+            gameTime={settings.gameTime}
+          />
+        </Provider>
+      </Router>,
       document.querySelector(`#root`)
   );
 };

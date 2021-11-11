@@ -16,10 +16,9 @@ import {getQuestions} from "../../reducer/data/selectors";
 import GameOverScreen from "../game-over-screen/game-over-screen";
 import WinScreen from "../win-screen/win-screen";
 import AuthorizationScreen from "../authorization-screen/authorization-screen";
-import {Switch, Route, Router} from "react-router-dom";
+import {Switch, Route, Redirect} from "react-router-dom";
 import PrivateRoute from "../private-route/private-route";
 import {getAuthorizationStatus} from "../../reducer/user/selectors";
-import history from "../../history";
 import {AuthorizationStatus} from "../../reducer/user/user";
 
 const transformPlayerToAnswer = (props) => {
@@ -70,20 +69,25 @@ const getScreen = (props) => {
   }
 
   if (mistakes >= maxMistakes || timer <= 0) {
-    return history.push(AppRoute.LOSE);
-    // <Redirect to={AppRoute.LOSE} />
-    // );
+    // return history.push(AppRoute.LOSE);
+    return (
+      <Redirect to={AppRoute.LOSE} />
+    );
   }
 
   if (step >= questions.length) {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
-      return history.push(AppRoute.RESULT);
+      // return history.push(AppRoute.RESULT);
+      return (
+        <Redirect to={AppRoute.RESULT} />
+      );
     } else if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      return history.push(AppRoute.LOGIN);
+      // return history.push(AppRoute.LOGIN);
+      return (
+        <Redirect to={AppRoute.LOGIN} />
+      );
     }
-    // return (
-    //   <Redirect to={AppRoute.RESULT} />
-    // );
+
   }
 
   const currentQuestion = questions[step];
@@ -130,37 +134,35 @@ const App = (props) => {
   const gameOverType = mistakes >= maxMistakes ? GameOverType.MAX_MISTAKES : GameOverType.MAX_TIME;
 
   return (
-    <Router history={history} >
-      <Switch>
-        <Route path={AppRoute.ROOT} exact render={() => screen} />
-        <Route path={AppRoute.LOSE} exact render={() => (
-          <GameOverScreen
-            type={gameOverType}
+    <Switch>
+      <Route path={AppRoute.ROOT} exact render={() => screen} />
+      <Route path={AppRoute.LOSE} exact render={() => (
+        <GameOverScreen
+          type={gameOverType}
+          onReplayButtonClick={resetGame}
+        />
+      )}
+      />
+      <Route path={AppRoute.LOGIN} exact render={() => (
+        <AuthorizationScreen
+          onReplayButtonClick={resetGame}
+        />
+      )}
+      />
+      <PrivateRoute
+        path={AppRoute.RESULT}
+        exact
+        authorizationStatus={authorizationStatus}
+        render={() => (
+          <WinScreen
+            time={maxTimer - timer}
+            mistakes={mistakes}
+            points={questions.length - mistakes}
             onReplayButtonClick={resetGame}
           />
         )}
-        />
-        <Route path={AppRoute.LOGIN} exact render={() => (
-          <AuthorizationScreen
-            onReplayButtonClick={resetGame}
-          />
-        )}
-        />
-        <PrivateRoute
-          path={AppRoute.RESULT}
-          exact
-          authorizationStatus={authorizationStatus}
-          render={() => (
-            <WinScreen
-              time={maxTimer - timer}
-              mistakes={mistakes}
-              points={questions.length - mistakes}
-              onReplayButtonClick={resetGame}
-            />
-          )}
-        />
-      </Switch>
-    </Router>
+      />
+    </Switch>
   );
 };
 

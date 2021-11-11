@@ -1,6 +1,12 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import {App} from "./app";
+import configureStore from "redux-mock-store";
+import NameSpace from "../../reducer/name-spaces";
+import {AuthorizationStatus} from "../../reducer/user/user";
+import {Provider} from "react-redux";
+import {MAX_MISTAKES_COUNT, MAX_TIME} from "../../const";
+import {Router} from "react-router-dom";
 
 const questions = [
   {
@@ -48,21 +54,49 @@ const questions = [
   },
 ];
 
+const mockStore = configureStore([]);
+
 it(`App correctly renders first screen`, () => {
+
+  const store = mockStore({
+    [NameSpace.GAME]: {
+      mistakes: 0,
+      maxMistakes: MAX_MISTAKES_COUNT,
+      step: -1,
+      timer: MAX_TIME,
+      maxTimer: MAX_TIME,
+    },
+    [NameSpace.USER]: {
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      userInfo: {
+        id: null,
+        email: null,
+      }
+    }
+  });
+
   const tree = renderer
-    .create(<App
-      gameTime={5}
-      questions={questions}
-      onUserAnswer={jest.fn()}
-      onWelcomeScreenClick={jest.fn()}
-      step={-1}
-      isAuthorizationRequired={false}
-      maxMistakes={3}
-      maxTimer={300}
-      mistakes={0}
-      timer={300}
-    />)
-  .toJSON();
+    .create(
+        <App
+          gameTime={5}
+          questions={questions}
+          onUserAnswer={jest.fn()}
+          onWelcomeScreenClick={jest.fn()}
+          step={-1}
+          isAuthorizationRequired={false}
+          maxMistakes={3}
+          maxTimer={300}
+          mistakes={0}
+          timer={300}
+          authorizationStatus={AuthorizationStatus.NO_AUTH}
+          resetGame={() => {}}
+        />,
+        {
+          createNodeMock: () => {
+            return {};
+          }
+        })
+    .toJSON();
 
   expect(tree).toMatchSnapshot();
 });
