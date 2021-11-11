@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 
 const PrivateRoute = (props) => {
   const {render, path, exact, authorizationStatus} = props;
+  // console.log(authorizationStatus);
 
   return (
     <Route

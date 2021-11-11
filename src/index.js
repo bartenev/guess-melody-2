@@ -7,11 +7,9 @@ import App from "./components/app/app";
 import thunk from "redux-thunk";
 import {compose} from "recompose";
 import {createApi} from "./api";
-import {Operations} from "./reducer/data/data";
-import {ActionCreator} from "./reducer/user/user";
-import {Router} from "react-router-dom";
-import {AppRoute} from "./const";
-import history from "history";
+import {Operations as DataOperations} from "./reducer/data/data";
+import {Operations as UserOperations} from "./reducer/user/user";
+import {ActionCreator, AuthorizationStatus} from "./reducer/user/user";
 
 
 const init = () => {
@@ -19,11 +17,11 @@ const init = () => {
     gameTime: 5,
   };
 
-  // const onUnauthorized = () => {
-  //   store.dispatch(ActionCreator.requireAuthorization(true));
-  // };
+  const onUnauthorized = () => {
+    store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));
+  };
 
-  const api = createApi(() => history.push(AppRoute.LOGIN));
+  const api = createApi(onUnauthorized);
 
   const store = createStore(
       reducer,
@@ -33,15 +31,14 @@ const init = () => {
       )
   );
 
-  store.dispatch(Operations.loadQuestions);
+  store.dispatch(DataOperations.loadQuestions);
+  store.dispatch(UserOperations.checkAuth());
 
   ReactDOM.render(
       <Provider store={store}>
-        <Router history={history}>
-          <App
-            gameTime={settings.gameTime}
-          />
-        </Router>
+        <App
+          gameTime={settings.gameTime}
+        />
       </Provider>,
       document.querySelector(`#root`)
   );

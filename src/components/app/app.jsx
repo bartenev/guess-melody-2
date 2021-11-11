@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {AppRoute, GameOverType, GameType} from "../../const";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen";
@@ -16,8 +16,8 @@ import {getQuestions} from "../../reducer/data/selectors";
 import GameOverScreen from "../game-over-screen/game-over-screen";
 import WinScreen from "../win-screen/win-screen";
 import AuthorizationScreen from "../authorization-screen/authorization-screen";
-import {Switch, Route, Redirect} from "react-router-dom";
-import {PrivateRoute} from "../private-route/private-route";
+import {Switch, Route, Router} from "react-router-dom";
+import PrivateRoute from "../private-route/private-route";
 import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import history from "../../history";
 import {AuthorizationStatus} from "../../reducer/user/user";
@@ -47,90 +47,90 @@ const ArtistQuestionScreenWrapped = withActivePlayer(
     withTransformProps(transformPlayerToQuestion)(ArtistQuestionScreen)
 );
 
-class App extends PureComponent {
-  static getScreen(props) {
-    const {
-      gameTime,
-      questions,
-      step, mistakes,
-      maxMistakes,
-      timer,
-      onUserAnswer,
-      onWelcomeScreenClick,
-      authorizationStatus
-    } = props;
+const getScreen = (props) => {
+  const {
+    gameTime,
+    questions,
+    step, mistakes,
+    maxMistakes,
+    timer,
+    onUserAnswer,
+    onWelcomeScreenClick,
+    authorizationStatus
+  } = props;
 
-    if (step === -1) {
-      return (
-        <WelcomeScreen
-          time={gameTime}
-          errorCount={MAX_MISTAKES_COUNT}
-          onWelcomeScreenClick={onWelcomeScreenClick}
-        />
-      );
-    }
-
-    if (mistakes >= maxMistakes || timer <= 0) {
-      return history.push(AppRoute.LOSE);
-      // <Redirect to={AppRoute.LOSE} />
-      // );
-    }
-
-    if (step >= questions.length) {
-      if (authorizationStatus === AuthorizationStatus.AUTH) {
-        return history.push(AppRoute.RESULT);
-      } else if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-        return history.push(AppRoute.LOGIN);
-      }
-      // return (
-      //   <Redirect to={AppRoute.RESULT} />
-      // );
-    }
-
-    const currentQuestion = questions[step];
-
-    switch (currentQuestion.type) {
-      case GameType.GENRE: return (
-        <GameScreen
-          type={GameType.GENRE}
-        >
-          <GenreQuestionScreenWrapped
-            question={currentQuestion}
-            onAnswer={onUserAnswer}
-          />
-        </GameScreen>
-      );
-
-      case GameType.ARTIST: return (
-        <GameScreen
-          type={GameType.ARTIST}
-        >
-          <ArtistQuestionScreenWrapped
-            question={currentQuestion}
-            onAnswer={onUserAnswer}
-          />
-        </GameScreen>
-      );
-    }
-
-    return null;
+  if (step === -1) {
+    return (
+      <WelcomeScreen
+        time={gameTime}
+        errorCount={MAX_MISTAKES_COUNT}
+        onWelcomeScreenClick={onWelcomeScreenClick}
+      />
+    );
   }
 
-  render() {
-    const {
-      questions,
-      mistakes,
-      maxMistakes,
-      timer,
-      maxTimer,
-      resetGame,
-      authorizationStatus
-    } = this.props;
+  if (mistakes >= maxMistakes || timer <= 0) {
+    return history.push(AppRoute.LOSE);
+    // <Redirect to={AppRoute.LOSE} />
+    // );
+  }
 
-    const screen = App.getScreen(this.props);
-    const gameOverType = mistakes >= maxMistakes ? GameOverType.MAX_MISTAKES : GameOverType.MAX_TIME;
+  if (step >= questions.length) {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      return history.push(AppRoute.RESULT);
+    } else if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      return history.push(AppRoute.LOGIN);
+    }
+    // return (
+    //   <Redirect to={AppRoute.RESULT} />
+    // );
+  }
 
-    return (
+  const currentQuestion = questions[step];
+
+  switch (currentQuestion.type) {
+    case GameType.GENRE: return (
+      <GameScreen
+        type={GameType.GENRE}
+      >
+        <GenreQuestionScreenWrapped
+          question={currentQuestion}
+          onAnswer={onUserAnswer}
+        />
+      </GameScreen>
+    );
+
+    case GameType.ARTIST: return (
+      <GameScreen
+        type={GameType.ARTIST}
+      >
+        <ArtistQuestionScreenWrapped
+          question={currentQuestion}
+          onAnswer={onUserAnswer}
+        />
+      </GameScreen>
+    );
+  }
+
+  return null;
+};
+
+const App = (props) => {
+  const {
+    questions,
+    mistakes,
+    maxMistakes,
+    timer,
+    maxTimer,
+    resetGame,
+    authorizationStatus
+  } = props;
+
+  const screen = getScreen(props);
+  const gameOverType = mistakes >= maxMistakes ? GameOverType.MAX_MISTAKES : GameOverType.MAX_TIME;
+
+  return (
+    <Router history={history} >
       <Switch>
         <Route path={AppRoute.ROOT} exact render={() => screen} />
         <Route path={AppRoute.LOSE} exact render={() => (
@@ -160,9 +160,9 @@ class App extends PureComponent {
           )}
         />
       </Switch>
-    );
-  }
-}
+    </Router>
+  );
+};
 
 App.propTypes = {
   gameTime: PropTypes.number.isRequired,
