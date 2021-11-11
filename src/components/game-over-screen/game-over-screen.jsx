@@ -1,6 +1,7 @@
 import React from "react";
-import {GameOverType} from "../../const";
+import {AppRoute, GameOverType} from "../../const";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 const gameOverOptions = [
   {
@@ -23,14 +24,11 @@ const GameOverScreen = (props) => {
       <div className="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"/></div>
       <h2 className="result__title">{data.title}</h2>
       <p className="result__total result__total--fail">{data.description}</p>
-      <button
+      <Link
         className="replay"
-        type="button"
-        onClick={(evt) => {
-          evt.preventDefault();
-          onReplayButtonClick();
-        }}
-      >Попробовать ещё раз</button>
+        to={AppRoute.ROOT}
+        onClick={onReplayButtonClick}
+      >Попробовать ещё раз</Link>
     </section>
   );
 };

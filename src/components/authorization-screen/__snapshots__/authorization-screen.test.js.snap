@@ -20,26 +20,14 @@ exports[`AuthorizationScreen is rendered correctly 1`] = `
     Вы настоящий меломан!
   </h2>
   <p
-    className="login__total"
-  >
-    За 
-    2
-     минуты и 
-    3
-     секунд вы набрали 
-    12
-     баллов (N быстрых), совершив 
-    3
-     ошибки
-  </p>
-  <p
     className="login__text"
   >
-    Хотите сравнить свой результат с предыдущими попытками? Представтесь!
+    Хотите узнать свой результат? Представтесь!
   </p>
   <form
     action=""
     className="login__form"
+    onSubmit={[Function]}
   >
     <p
       className="login__field"
@@ -54,7 +42,8 @@ exports[`AuthorizationScreen is rendered correctly 1`] = `
         className="login__input"
         id="name"
         name="name"
-        type="text"
+        required={true}
+        type="email"
       />
     </p>
     <p
@@ -70,7 +59,8 @@ exports[`AuthorizationScreen is rendered correctly 1`] = `
         className="login__input"
         id="password"
         name="password"
-        type="text"
+        required={true}
+        type="password"
       />
       <span
         className="login__error"
@@ -80,7 +70,6 @@ exports[`AuthorizationScreen is rendered correctly 1`] = `
     </p>
     <button
       className="login__button button"
-      onClick={[Function]}
       type="submit"
     >
       Войти

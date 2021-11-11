@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../../const";
 
 const WinScreen = (props) => {
   const {time, mistakes, points, onReplayButtonClick} = props;
@@ -10,14 +12,11 @@ const WinScreen = (props) => {
       <h2 className="result__title">Вы настоящий меломан!</h2>
       <p className="result__total">За {Math.floor(time / 60)} минуты и {time % 60} секунд вы набрали {points} баллов (N быстрых), совершив {mistakes} ошибки</p>
       <p className="result__text">Вы заняли 2 место из 10. Это лучше чем у 80% игроков</p>
-      <button
+      <Link
         className="replay"
-        type="button"
-        onClick={(evt) => {
-          evt.preventDefault();
-          onReplayButtonClick();
-        }}
-      >Сыграть ещё раз</button>
+        to={AppRoute.ROOT}
+        onClick={onReplayButtonClick}
+      >Сыграть ещё раз</Link>
     </section>
   );
 };
